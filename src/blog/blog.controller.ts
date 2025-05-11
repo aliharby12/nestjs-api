@@ -3,9 +3,9 @@ import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 
-@Controller('blog')
+@Controller('posts')
 export class BlogController {
-  constructor(private readonly blogService: BlogService) {}
+  constructor(private readonly blogService: BlogService) { }
 
   @Post()
   create(@Body() createBlogDto: CreateBlogDto) {
@@ -20,11 +20,6 @@ export class BlogController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.blogService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogService.update(+id, updateBlogDto);
   }
 
   @Delete(':id')
