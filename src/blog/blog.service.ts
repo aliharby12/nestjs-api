@@ -24,6 +24,11 @@ export class BlogService {
     return await this.postsRepository.findOneBy({ id });
   }
 
+  async updateOne(id: number, updateBlogDto: UpdateBlogDto): Promise<Post | null > {
+    const post = this.postsRepository.findOneBy({ id });
+    return await post
+  }
+
   async remove(id: number): Promise<void> {
     await this.postsRepository.delete(id)
   }

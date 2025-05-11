@@ -18,12 +18,18 @@ export class BlogController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.blogService.findOne(+id);
   }
 
+  @Patch('id')
+  updateOne(@Param('id') id: number, @Body() updateBlogDto: UpdateBlogDto) {
+    console.log(id)
+    return this.blogService.updateOne(+id, updateBlogDto);
+  }
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.blogService.remove(+id);
   }
 }
