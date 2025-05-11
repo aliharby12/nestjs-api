@@ -24,4 +24,7 @@ export class User {
 
     @Column({ default: true })
     isActive: boolean;
+
+    @Column()
+    password: string;
 }
