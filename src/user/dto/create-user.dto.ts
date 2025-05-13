@@ -12,7 +12,7 @@ export class CreateUserDto {
         example: 'user@example.com',
         description: 'The email address of the user'
     })
-    @Column()
+    @Column({ unique: true })
     @IsEmail()
     email: string;
 

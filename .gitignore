@@ -12,6 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+nestapi_project_docs
 # OS
 .DS_Store
 

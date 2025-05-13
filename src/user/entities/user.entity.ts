@@ -18,7 +18,7 @@ export class User {
     firstName: string;
 
     @ApiProperty({
-        example: 'Doe', 
+        example: 'Doe',
         description: 'The last name of the user'
     })
     @Column()
@@ -28,7 +28,7 @@ export class User {
         example: 'user@example.com',
         description: 'The email address of the user'
     })
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @ApiProperty({
@@ -43,7 +43,7 @@ export class User {
         example: '1990-01-01',
         description: 'The date of birth of the user'
     })
-    @Column()
+    @Column({ nullable: true })
     bod: Date;
 
     @ApiProperty({
