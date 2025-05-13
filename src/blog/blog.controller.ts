@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiProperty, ApiBadRequestResponse, ApiCreatedResponse, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiProperty, ApiBadRequestResponse, ApiCreatedResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { Post as BlogPost } from './entities/blog.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('posts')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Controller('posts')
 export class BlogController {
   constructor(private readonly blogService: BlogService) { }
