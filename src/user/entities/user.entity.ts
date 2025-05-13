@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import * as bcrypt from 'bcryptjs';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -74,4 +75,8 @@ export class User {
     })
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+
+    async comparePassword(plainPassword: string): Promise<boolean> {
+        return bcrypt.compare(plainPassword, this.password);
+    }
 }

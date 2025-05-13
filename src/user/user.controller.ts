@@ -32,6 +32,14 @@ export class UserController {
         return this.userService.findOne(+id);
     }
 
+    @Get('email/:email')
+    @ApiOperation({ summary: 'Get a user by email' })
+    @ApiResponse({ status: 200, description: 'Return the user', type: User })
+    @ApiResponse({ status: 404, description: 'User not found' })
+    findOneByEmail(@Param('email') email: string) {
+        return this.userService.findOneByEmail(email);
+    }
+
     @Delete(':id')
     @ApiOperation({ summary: 'Delete a user' })
     @ApiResponse({ status: 200, description: 'The user has been successfully deleted' })

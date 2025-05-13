@@ -17,7 +17,8 @@ export class UserService {
         const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
         createUserDto.password = hashedPassword;
 
-        const res = await this.usersRepository.save(createUserDto);
+        const newUser = this.usersRepository.create(createUserDto);
+        const res = await this.usersRepository.save(newUser);
         return res;
     }
 
@@ -27,6 +28,10 @@ export class UserService {
 
     async findOne(id: number): Promise<User | null> {
         return await this.usersRepository.findOneBy({ id });
+    }
+
+    async findOneByEmail(email: string): Promise<User | null> {
+        return await this.usersRepository.findOneBy({ email });
     }
 
     async remove(id: number): Promise<void> {
