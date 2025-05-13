@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -12,6 +12,7 @@ export class UserController {
     @ApiOperation({ summary: 'Create a new user' })
     @ApiResponse({ status: 201, description: 'User created', type: User })
     @ApiResponse({ status: 400, description: 'Bad Request' })
+    @UsePipes(ValidationPipe)
     async create(@Body() createUserDto: CreateUserDto) {
         return await this.userService.create(createUserDto);
     }

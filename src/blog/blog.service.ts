@@ -19,11 +19,11 @@ export class BlogService {
     return await this.postsRepository.find();
   }
 
-  async findOne(id: number): Promise<Post | null > {
+  async findOne(id: number): Promise<Post | null> {
     return await this.postsRepository.findOneBy({ id });
   }
 
-  async updateOne(id: number, updateBlogDto: UpdateBlogDto): Promise<Post | null > {
+  async updateOne(id: number, updateBlogDto: UpdateBlogDto): Promise<Post | null> {
     const post = this.postsRepository.findOneBy({ id });
     return await post
   }

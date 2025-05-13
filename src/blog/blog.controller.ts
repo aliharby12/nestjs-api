@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
@@ -13,6 +13,7 @@ export class BlogController {
   @Post()
   @ApiOperation({ summary: 'Create a new blog post' })
   @ApiCreatedResponse({ description: 'The blog post has been successfully created.', type: BlogPost })
+  @UsePipes(ValidationPipe)
   async create(@Body() createBlogDto: CreateBlogDto) {
     return await this.blogService.create(createBlogDto);
   }
@@ -41,6 +42,7 @@ export class BlogController {
     },
     description: 'Blog post update data'
   })
+  @UsePipes(ValidationPipe)
   async updateOne(@Param('id') id: number, @Body() updateBlogDto: UpdateBlogDto) {
     const updatedPost = await this.blogService.updateOne(+id, updateBlogDto);
     if (!updatedPost) {
