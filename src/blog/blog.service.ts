@@ -4,6 +4,7 @@ import { UpdateBlogDto } from './dto/update-blog.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { Post } from './entities/blog.entity';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class BlogService {
@@ -30,5 +31,13 @@ export class BlogService {
 
   async remove(id: number): Promise<void> {
     await this.postsRepository.delete(id)
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Post>> {
+    const qb = this.postsRepository
+      .createQueryBuilder('post');
+
+    qb.orderBy('post.id', 'ASC');
+    return paginate<Post>(qb, options);
   }
 }

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe, UseGuards, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from './dto/create-blog.dto';
 import { UpdateBlogDto } from './dto/update-blog.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiProperty, ApiBadRequestResponse, ApiCreatedResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { Post as BlogPost } from './entities/blog.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
 
 @ApiTags('posts')
 @ApiBearerAuth()
@@ -24,8 +25,12 @@ export class BlogController {
   @Get()
   @ApiOperation({ summary: 'Get all blog posts' })
   @ApiResponse({ status: 200, description: 'Return all blog posts', type: [BlogPost] })
-  async findAll() {
-    return await this.blogService.findAll();
+  async findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
+  ): Promise<Pagination<BlogPost>> {
+    const options: IPaginationOptions = { page: page, limit: limit };
+    return await this.blogService.paginate(options);
   }
 
   @Get(':id')
